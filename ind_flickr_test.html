@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Flickr кошки</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/png">
+    <script src="flickr.js"></script>
+</head>
+
+<body>
+
+<script>
+
+    const delay = seconds => new Promise(resolve => setTimeout(resolve, seconds * 1000));
+    // вставьте ключ
+    // https://www.flickr.com/services/apps/create/
+    const getApiKey = () => '';
+
+    // Returns a Promise that resolves to an array of urls to images that
+    // represents a (paged) result of a tag search on Flickr.
+    function flickrTagSearch (tag, page) {
+        const apiKey = getApiKey();
+        return fetch(
+            'https://api.flickr.com/services/rest/' +
+            '?method=flickr.photos.search' +
+            '&api_key=' + apiKey +
+            '&page=' + page +
+            '&tags=' + tag +
+            // '&text=' + tag +
+            '&content_type=1'+
+            '&sort=relevance'+
+            '&in_gallery=true'+
+            // '&is_commons=true'+
+            '&tag_mode=AND' +
+            '&format=json' +
+            '&nojsoncallback=1'
+        )
+        .then(response => response.json())
+        .then(body => body.photos.photo)
+        .then(photos => photos.map(photo =>
+                `https://farm${photo.farm}.staticflickr.com/` +
+                `${photo.server}/${photo.id}_${photo.secret}_q.jpg`
+            ));
+    }
+
+    let a = flickrTagSearch('cat',1);
+    delay(5);
+    console.log(a);
+
+
+</script>
+
+</body>
+</html>

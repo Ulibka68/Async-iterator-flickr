@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Flickr кошки</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/png">
+    <script src="flickr.js"></script>
+</head>
+<style>
+    img {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+
+    }
+
+    .imgDesc {
+        width: 150px;
+        height: 150px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: none;
+        font-weight: bolder;
+        font-size: 2rem;
+        color: white;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    img:hover + .imgDesc, .imgDesc:hover {
+        display: block;
+    }
+
+    .imgContainer {
+        display: inline-block;
+        width: 150px;
+        height: 150px;
+        position: relative;
+        margin: 5px;
+    }
+</style>
+<body>
+
+<script>
+    // let ft = flickrTagSearchF('cats');
+    // let j = ft.next();
+    // console.dir(j);
+
+
+
+    async function handle () {
+        let ft = flickrTagSearchF('cats');
+        let j=0;
+
+        // console.dir(ft);
+        for await (let ft1 of ft) {
+
+            insertImage(ft1,j);
+            if (j++ > 50) return;
+        }
+    }
+
+
+    /*
+    function handle() {
+        let ft = flickrTagSearchF('cat');
+        let j = ft.next();console.log(j);
+        j = ft.next();console.log(j);
+        j = ft.next();console.log(j);
+    }
+    */
+
+    function insertImage(url,i) {
+        // let img = new Image(150,150);
+        // img.src = url;
+
+        // console.log(i,' --> ',url);
+
+        let img=document.createElement('div');
+        img.classList.add('imgContainer');
+        img.innerHTML=`<img src="${url}" ><p class="imgDesc">${i}</p>`;
+        document.body.appendChild(img);
+    }
+    // <img src="${url}" style="width: 150px; height: 150px" />
+
+    handle();
+</script>
+
+</body>
+</html>
