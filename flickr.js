@@ -1,14 +1,34 @@
 // https://beta.observablehq.com/@mpj/code-for-using-async-generators-to-stream-data-in-javascrip
 // https://www.flickr.com/services/api/explore/flickr.photos.search
+// https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=5989617c0a5018ae4ee610b0c8b25e0e&tags=cat&
+// per_page=100&format=json&nojsoncallback=1&auth_token=72157677475402458-56a865ba0cf39e29&api_sig=7b087183bd9246387e394f412d8bfbb4
 
+/*
+
+
+Key:
+5989617c0a5018ae4ee610b0c8b25e0e
+
+Secret:
+2e114b797a91e1f6
+
+https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=5989617c0a5018ae4ee610b0c8b25e0e&tags=cat&format=json&nojsoncallback=1
+
+{
+    for await(const url of cats)
+        yield html`<img src="${url}" style="width: 150px; height: 150px" />`
+}
+
+cats = Object {
+    Symbol(Symbol.asyncIterator): async ƒ*()
+}
+*/
 
 function flickrTagSearchF(tag) {
 
     // Returns a promise that resolves after _seconds_
     const delay = seconds => new Promise(resolve => setTimeout(resolve, seconds * 1000));
-    // вставьте ключ отсюда:
-    // https://www.flickr.com/services/apps/create/
-    const getApiKey = () => '';
+    const getApiKey = () => '5989617c0a5018ae4ee610b0c8b25e0e';
 
     // Returns a Promise that resolves to an array of urls to images that
     // represents a (paged) result of a tag search on Flickr.
